@@ -4,8 +4,7 @@
 
 var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
-    mocha = require('gulp-mocha'),
-    notify = require('gulp-notify'); // takes advantage of growl for notifications
+    mocha = require('gulp-mocha');
 
 // Reference our app files for easy reference in out gulp tasks
 var paths = {
@@ -15,18 +14,16 @@ var paths = {
 };
 
 // run smoke tests
-gulp.task('smokeTest', function(){
+gulp.task('smokeTest', function () {
   gulp.src(paths.uat)
-    .pipe(mocha({reporter: 'spec'}))
-    .pipe(notify({message: "UAT complete"}));
+    .pipe(mocha({reporter: 'spec'}));
 });
 
 // lint your js files
-gulp.task('jshint', function(){
+gulp.task('jshint', function () {
   gulp.src(paths.uat, paths.uatHelpers)
     .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    .pipe(notify({message: 'Linitng complete'}));
+    .pipe(jshint.reporter('default'));
 });
 
 gulp.task('default', ['jshint', 'smokeTest']);

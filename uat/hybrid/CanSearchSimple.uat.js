@@ -6,7 +6,8 @@ require("../helpers/setup");
 
 var wd = require("wd"),
     _ = require('underscore'),
-    serverConfigs = require('../helpers/appium-servers');
+    serverConfigs = require('../helpers/appium-servers'),
+    path = require('path');
 
 describe("Can Search Simple", function () {
   this.timeout(300000);
@@ -24,7 +25,7 @@ describe("Can Search Simple", function () {
 
   function addCapabilitiesAndInit(capabilities, driver) {
     var desired = _.clone(capabilities.ios71);
-    desired.app = require("../helpers/apps").iosWebviewApp;
+    desired.app = path.join('../../', require("../helpers/apps").iosWebviewApp);
 
     if (process.env.SAUCE) {
       desired.name = 'ios - simple search webview';
@@ -56,7 +57,6 @@ describe("Can Search Simple", function () {
     allPassed = allPassed && this.currentTest.state === 'passed';
   });
 
-
   it("should get the url", function () {
     return driver
       .elementByXPath('//UIATextField[@value=\'Enter URL\']')
@@ -66,10 +66,10 @@ describe("Can Search Simple", function () {
       .context('WEBVIEW')
       .sleep(1000)
       .waitForElementByName('q', 5000)
-        .sendKeys('sauce labs')
+        .sendKeys('bbc')
         .sendKeys(wd.SPECIAL_KEYS.Return)
       .sleep(1000)
-      .title().should.eventually.include('sauce labs');
+      .title().should.eventually.include('bbc');
   });
 
 });

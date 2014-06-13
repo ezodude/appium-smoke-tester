@@ -3,8 +3,8 @@
 'use strict';
 
 if (process.env.DEV) {
-  exports.iosTestApp = "sample-code/apps/ios/TestApp/build/Release-iphonesimulator/TestApp.app";
-  exports.iosWebviewApp = "sample-code/apps/ios/WebViewApp/build/Release-iphonesimulator/WebViewApp.app";
+  exports.iosWebviewApp = "sample-code/apps/ios/WebViewApp.app";
+  exports.iosPrivate1 = "sample-code/apps/ios/Private1.app";
   exports.iosUICatalogApp = "sample-code/apps/ios/UICatalog/build/Release-iphonesimulator/UICatalog.app";
   exports.androidApiDemos = "sample-code/apps/android/ApiDemos/bin/ApiDemos-debug.apk";
 } else {

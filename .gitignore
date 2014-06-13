@@ -19,3 +19,7 @@ node_modules/
 # vim floaties
 *.un~
 *.swp
+
+####
+# ignore private apps
+sample-code/apps/ios/Private1.app
