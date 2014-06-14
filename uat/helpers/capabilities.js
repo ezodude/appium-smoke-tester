@@ -2,7 +2,7 @@
 
 'use strict';
 
-exports.ios71 = {
+exports.ios = {
   browserName: '',
   'appium-version': '1.0',
   platformName: 'iOS',
@@ -11,20 +11,20 @@ exports.ios71 = {
   app: undefined // will be set later
 };
 
+exports.android = {
+  browserName: '',
+  'appium-version': '1.0',
+  platformName: 'Android',
+  platformVersion: '4.4.2',
+  deviceName: 'Android Emulator',
+  app: undefined // will be set later
+};
+
 exports.android18 = {
   browserName: '',
   'appium-version': '1.0',
   platformName: 'Android',
   platformVersion: '4.3',
-  deviceName: 'Android Emulator',
-  app: undefined // will be set later
-};
-
-exports.android19 = {
-  browserName: '',
-  'appium-version': '1.0',
-  platformName: 'Android',
-  platformVersion: '4.4.2',
   deviceName: 'Android Emulator',
   app: undefined // will be set later
 };

@@ -15,7 +15,8 @@ describe("Can Login", function () {
   var driver;
   var allPassed = true,
       username = process.env.PRIVATE_USERNAME,
-      password = process.env.PRIVATE_PASSWORD;
+      password = process.env.PRIVATE_PASSWORD,
+      platform = process.env.PLATFORM || 'ios';
 
   function setupWithAppiumServer(serverConfig) {
     return wd.promiseChainRemote(serverConfig);
@@ -26,11 +27,16 @@ describe("Can Login", function () {
   }
 
   function addCapabilitiesAndInit(capabilities, driver) {
-    var desired = _.clone(capabilities.ios71);
-    desired.app = path.join('../../', require("../helpers/apps").iosPrivate1);
+    var desired = _.clone(capabilities[platform]);
+    desired.app = path.join('../../', require("../helpers/apps")[platform + 'Private1']);
+
+    if (platform === 'android') {
+      desired.appPackage = process.env.APP_PACKAGE;
+      desired.appActivity = process.env.APP_ACTIVITY;
+    }
 
     if (process.env.SAUCE) {
-      desired.name = 'ios - simple search webview';
+      desired.name = platform + ' - Can login';
       desired.tags = ['sample'];
     }
     return driver.init(desired);
@@ -92,7 +98,7 @@ describe("Can Login", function () {
         .sendKeys(password)
       .elementByCss('button').click()
       .waitForElementByCss('.courses', 5000)
-      .elementByCss('.course-title')
+      .waitForElementByCss('.course-title', 5000)
       .text().should.eventually.include('Mobile');
   });
 
