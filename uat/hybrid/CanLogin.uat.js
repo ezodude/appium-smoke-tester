@@ -45,11 +45,11 @@ describe("Can Login", function () {
   function switchToUIWebViewContext(driver) {
     var webViewContext = 'WEBVIEW'; // instead of default NATIVE_APP context
 
-    return driver.setImplicitWaitTimeout(1000)
+    return driver.setImplicitWaitTimeout(3000)
       .contexts()
       .then(function (contexts) {
         webViewContext = _.find(contexts, function (context) {
-          return context.indexOf('WEBVIEW') > -1;
+          return context.indexOf('WEBVIEW') !== -1;
         });
       })
       .context(webViewContext);
