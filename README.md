@@ -26,31 +26,7 @@ This ensures any node modules with an executable cli in the local ```node_module
 brew install direnv
 ```
 
-Add the following line at the end of your __~/.bashrc__ or __~/.bash_profile__ file:
-
-```bash
-eval "$(direnv hook bash)"
-```
-
-or
-
-Add the following line at the end of you "~/.zshrc" file:
-
-```zsh
-eval "$(direnv hook zsh)"
-```
-
-Reload the shell by running the following at command line:
-
-```
-source ~/.bashrc
-```
-
-or
-
-```
-source ~/.zshrc
-```
+Follow setup instructions [here](https://github.com/zimbatm/direnv#setup).
 
 ```cd``` into the directory where you've just installed the project.
 
