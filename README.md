@@ -54,7 +54,7 @@ source ~/.zshrc
 
 ```cd``` into the directory where you've just installed the project.
 
-Allow .envrc by running the following:
+Allow the ```.envrc``` file by running the following:
 
 ```
 direnv allow
