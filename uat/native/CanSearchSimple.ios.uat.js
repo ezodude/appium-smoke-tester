@@ -1,5 +1,10 @@
 /*jslint node: true */
 
+/*
+  THIS ONLY RUNS ON IOS.
+  USE TO ENSURE APPIUM IS SETUP CORRECTLY.
+*/
+
 "use strict";
 
 require("../helpers/setup");

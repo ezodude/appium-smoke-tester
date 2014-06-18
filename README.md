@@ -38,3 +38,18 @@ direnv allow
 ### Node modules
 
 Simply ```npm install``` at the root of the project. This includes appium.
+
+## Running the tests
+
+From the project root, run Appium in a separate shell window.
+
+```
+appium
+```
+
+This should output
+```
+info: Welcome to Appium v1.1.0 (REV e433bbc31511f199287db7724e1ce692bcb32117)
+info: Appium REST http interface listener started on 0.0.0.0:4723
+info: socket.io started
+```
