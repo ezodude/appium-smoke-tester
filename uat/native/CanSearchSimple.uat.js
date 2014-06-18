@@ -13,7 +13,8 @@ describe("Can Search Simple", function () {
   this.timeout(300000);
 
   var driver;
-  var allPassed = true;
+  var allPassed = true,
+      platform = process.env.PLATFORM || 'ios';
 
   function setupWithAppiumServer(serverConfig) {
     return wd.promiseChainRemote(serverConfig);
@@ -24,11 +25,11 @@ describe("Can Search Simple", function () {
   }
 
   function addCapabilitiesAndInit(capabilities, driver) {
-    var desired = _.clone(capabilities.ios71);
-    desired.app = path.join('../../', require("../helpers/apps").iosWebviewApp);
+    var desired = _.clone(capabilities[platform]);
+    desired.app = path.join('../../', require("../helpers/apps")[platform + 'WebviewApp']);
 
     if (process.env.SAUCE) {
-      desired.name = 'ios - simple search webview';
+      desired.name = 'simple search webview';
       desired.tags = ['sample'];
     }
     return driver.init(desired);
