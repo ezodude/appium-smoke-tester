@@ -100,7 +100,7 @@ This fires up the iOS simulator and runs the hybrid mocha tests.
 
 I use [Genymotion](http://www.genymotion.com) to run tests on a virtual device. Install the personal version as it will save you a ton of time.
 
-Here we're targetting Kitkat 4.4. If using Genymotion, just install the Nexus 5: *Google Nexus 5 - 4.42 - API 19 - 1080x1920*
+Here we're targetting Kitkat 4.4. If using Genymotion, install the Nexus 5: *Google Nexus 5 - 4.4.2 - API 19 - 1080x1920* virtual device.
 
 > You have to ensure Genymotion and the specific virtual device are
 > running before the test can be executed.
