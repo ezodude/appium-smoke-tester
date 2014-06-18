@@ -94,7 +94,7 @@ DEV=true PLATFORM=ios PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx
 
 ```PRIVATE_USERNAME``` and ```PRIVATE_PASSWORD``` are the target login screen's username and password.
 
-This fires up the iOS simulator and runs the hybrid mocha tests for **iOS**.
+This fires up the iOS simulator and runs the hybrid mocha tests.
 
 #### Android for login smoke test
 
@@ -111,7 +111,7 @@ DEV=true APP_PACKAGE='com.domain.name' APP_ACTIVITY='.ActivityName' PLATFORM=and
 
 ```PRIVATE_USERNAME``` and ```PRIVATE_PASSWORD``` are the target login screen's username and password.
 
-This fires up the Google Nexus 5 virtual device and runs the hybrid mocha tests for **Android**.
+This fires up the Android Google Nexus 5 virtual device and runs the hybrid mocha tests.
 
 ##### Configuring APP_PACKAGE + APP_ACTIVITY
 
