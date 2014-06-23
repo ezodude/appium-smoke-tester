@@ -22,5 +22,6 @@ node_modules/
 
 ####
 # ignore private apps
-sample-code/apps/ios/Private1.app
+sample-code/apps/ios/device/Private1.app
+sample-code/apps/ios/sim/Private1.app
 sample-code/apps/android/Private1-debug.apk

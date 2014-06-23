@@ -11,12 +11,23 @@ exports.ios = {
   app: undefined // will be set later
 };
 
+exports.iosDevice = {
+  browserName: '',
+  'appium-version': '1.1',
+  platformName: 'iOS',
+  platformVersion: '7.1',
+  deviceName: 'iPhone',
+  udid: process.env.IOS_UDID,
+  app: undefined // will be set later
+};
+
 exports.android = {
   browserName: '',
   'appium-version': '1.1',
   platformName: 'Android',
   platformVersion: '4.4',
   deviceName: 'Android Emulator',
+  automationName: 'selendroid',
   deviceType: "phone",
   androidUseRunningApp: false,
   app: undefined, // will be set later

@@ -27,8 +27,8 @@ describe("Can Login", function () {
   }
 
   function addCapabilitiesAndInit(capabilities, driver) {
-    var desired = _.clone(capabilities[platform]);
-    desired.app = path.join('../../', require("../helpers/apps")[platform + 'Private1']);
+    var desired = _.clone(capabilities[platform + 'Device']);
+    desired.app = path.join('../../', require("../helpers/apps")[platform + 'Private1' + 'Device']);
 
     if (platform === 'android') {
       desired.appPackage = process.env.APP_PACKAGE;

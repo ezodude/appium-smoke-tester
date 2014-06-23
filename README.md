@@ -122,3 +122,31 @@ In Apache Cordova projects, this is found at```./platforms/android/AndroidManife
 Specifically:
 * APP_PACKAGE: is the **package** attribute in the *manifest* node.
 * APP_ACTIVITY: is the **android:name** attribute prefixed with a '.' in the *application/activity* node.
+
+### On Device
+
+#### iOS
+
+Find your UDID using the shell:
+
+
+Start ios_webkit_debug_proxy
+```
+ios_webkit_debug_proxy -c UDID:27753 -d
+```
+
+If any problems, see https://github.com/google/ios-webkit-debug-proxy/issues/59
+
+Ensure app has been compiled for device (armv7 build) and has been signed correctly.
+
+Code sign info:
+```
+codesign -dvvv /path/to/app
+```
+
+If not build for armv7 architecture and sign correctly. (http://stackoverflow.com/questions/16525871/cannot-run-frank-tests-on-device-although-frankified-app-is-on-device)
+
+To code sign using cert
+```
+codesign -v --sign "iPhone Distribution: Joe Dev" /path/to/app
+```
