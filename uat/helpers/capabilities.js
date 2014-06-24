@@ -39,6 +39,9 @@ exports.android18 = {
   platformName: 'Android',
   platformVersion: '4.3',
   deviceName: 'Android Emulator',
+  automationName: 'selendroid',
+  deviceType: "phone",
+  androidUseRunningApp: false,
   app: undefined // will be set later
 };
 
