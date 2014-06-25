@@ -86,6 +86,8 @@ The __default gulp task__ is configured to run a prototypical hybrid test. This 
 
 > You can supply your own app and settings **using ENV variables** - but I'm working on adding a sample app soon.
 
+### On Simulators
+
 #### iOS for login smoke test
 
 This targets the simulator only.
@@ -96,7 +98,7 @@ PLATFORM=ios PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
 
 ```PRIVATE_USERNAME``` and ```PRIVATE_PASSWORD``` are the target login screen's username and password.
 
-This fires up the iOS simulator and runs the hybrid mocha tests.
+This fires up the iOS simulator and runs the hybrid mocha tests. The tested app is a ```i386``` build.
 
 #### Android for login smoke test
 
@@ -137,7 +139,7 @@ Specifically:
 
 #### iOS
 
-#### building app for running on device
+#### Building app for running on device
 
 We have to ensure that the app has been compiled for a device (armv7 build) and has been signed correctly.
 
