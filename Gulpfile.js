@@ -16,13 +16,18 @@ var paths = {
   uatHelpers: ['./uat/helpers/*.js']
 };
 
-gulp.task('smokeIOS', function () {
+gulp.task('verifySetup', function () {
   process.env.PLATFORM = 'ios';
-  gulp.src(paths.uat.all)
+  process.env.IOS_UDID = undefined;
+  process.env.DEV = true;
+
+  gulp.src(paths.uat.native)
     .pipe(mocha({reporter: 'spec'}));
 });
 
-gulp.task('smokeHybrid', function () {
+gulp.task('smokeHybridLocal', function () {
+  process.env.DEV = true;
+
   gulp.src(paths.uat.hybrid)
     .pipe(mocha({reporter: 'spec'}));
 });
@@ -34,4 +39,4 @@ gulp.task('jshint', function () {
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('default', ['jshint', 'smokeHybrid']);
+gulp.task('default', ['jshint', 'smokeHybridLocal']);
