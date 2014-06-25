@@ -41,6 +41,8 @@ Simply ```npm install``` at the root of the project. This includes appium.
 
 ## Running the tests
 
+All the tests will be run locally using a local Appium setup and local app packages.
+
 ### Start Appium
 
 From the project root, run Appium in a separate shell window.
@@ -56,12 +58,12 @@ info: Appium REST http interface listener started on 0.0.0.0:4723
 info: socket.io started
 ```
 
-### Double check the setup works
+### Verify the setup works
 
-This runs a test for iOS against a basic bundled app. The app is native but uses a WebView to perform a google search.
+This runs a test on the iOS simulator against a basic bundled app. The app is native but uses a WebView to perform a google search.
 
 ```
-DEV=true mocha uat/native/CanSearchSimple.ios.uat.js
+gulp verifySetup
 ```
 
 Running the test will fire up the iOS simulator and run the mocha tests.
@@ -89,7 +91,7 @@ The __default gulp task__ is configured to run a prototypical hybrid test. This 
 This targets the simulator only.
 
 ```
-DEV=true PLATFORM=ios PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
+PLATFORM=ios PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
 ```
 
 ```PRIVATE_USERNAME``` and ```PRIVATE_PASSWORD``` are the target login screen's username and password.
@@ -100,18 +102,26 @@ This fires up the iOS simulator and runs the hybrid mocha tests.
 
 I use [Genymotion](http://www.genymotion.com) to run tests on a virtual device. Install the personal version as it will save you a ton of time.
 
-Here we're targetting Kitkat 4.4. If using Genymotion, install the Nexus 5: *Google Nexus 5 - 4.4.2 - API 19 - 1080x1920* virtual device.
+The tests work fine against both:
+
+* Android Kitkat 4.4
+* Android Jelly Bean 4.3
+
+Using Genymotion, install these virtual devices:
+
+* Google Nexus 5 - 4.4.2 - API 19 - 1080x1920
+* Samsung Galaxy S4 - 4.3 - API 18 - 1080x1920
 
 > You have to ensure Genymotion and the specific virtual device are
-> running before the test can be executed.
+> running before the test can be executed. Start a device, test, kill that device, move to next device and repeat.
 
 ```
-DEV=true APP_PACKAGE='com.domain.name' APP_ACTIVITY='.ActivityName' PLATFORM=android PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
+PLATFORM=android APP_PACKAGE='com.domain.appname' APP_ACTIVITY='.ActivityName' PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
 ```
 
 ```PRIVATE_USERNAME``` and ```PRIVATE_PASSWORD``` are the target login screen's username and password.
 
-This fires up the Android Google Nexus 5 virtual device and runs the hybrid mocha tests.
+This fires up the Android virtual device and runs the hybrid mocha tests.
 
 ##### Configuring APP_PACKAGE + APP_ACTIVITY
 
@@ -127,26 +137,86 @@ Specifically:
 
 #### iOS
 
-Find your UDID using the shell:
+#### building app for running on device
 
+We have to ensure that the app has been compiled for a device (armv7 build) and has been signed correctly.
 
-Start ios_webkit_debug_proxy
-```
-ios_webkit_debug_proxy -c UDID:27753 -d
-```
-
-If any problems, see https://github.com/google/ios-webkit-debug-proxy/issues/59
-
-Ensure app has been compiled for device (armv7 build) and has been signed correctly.
+We can confirm both these assumptions using this command
 
 Code sign info:
 ```
 codesign -dvvv /path/to/app
 ```
 
-If not build for armv7 architecture and sign correctly. (http://stackoverflow.com/questions/16525871/cannot-run-frank-tests-on-device-although-frankified-app-is-on-device)
+Output
+```
+Executable=/path/to/app/smoke-tests/sample-code/apps/ios/device/Private1.app/App
+Identifier=com.domain.app-name
+Format=bundle with Mach-O thin (armv7)
+CodeDirectory v=20200 size=9793 flags=0x0(none) hashes=480+5 location=embedded
+Hash type=sha1 size=20
+CDHash=0c79926b8fa4025da8ab9e077d8b4bd701a48ffc
+Signature size=4338
+Authority=iPhone Developer: Joe Dev (XXXXXXXX)
+Authority=Apple Worldwide Developer Relations Certification Authority
+Authority=Apple Root CA
+Signed Time=23 Jun 2014 12:14:17
+Info.plist entries=30
+TeamIdentifier=XXXXXXX
+Sealed Resources version=2 rules=5 files=198
+Internal requirements count=2 size=980
+```
+The ```Format``` field verifies the target env (armv7 or otherwise).
+The ```Authority``` field verifies that the app has been signed.
 
-To code sign using cert
+##### To build for device and code sign
+
+Use the xcodebuild command (and substitute for your own app). The ```build.xcconfig``` is conveniently bundled with the project:
 ```
-codesign -v --sign "iPhone Distribution: Joe Dev" /path/to/app
+xcodebuild -xcconfig "./build.xcconfig" -project "path/to/xcode/project/file/PROJECT_NAME.xcodeproj" ARCHS="armv7 armv7s arm64" -target "PROJECT_NAME" -configuration $CONFIGURATION -sdk iphoneos build VALID_ARCHS="armv7 armv7s arm64" CONFIGURATION_BUILD_DIR="path/to/build/dir/device"
 ```
+
+##### To only code sign
+
+Find available signing identities using:
+```
+security find-identity |  sed -n 's/.*\("[^"]*"\).*/\1/p' | grep 'iPhone'
+```
+
+To actually code sign:
+```
+codesign -v --sign "iPhone Developer: Joe Dev" /path/to/app
+```
+
+#### Setting up a debug proxy
+
+Provided your device is connected using a USB cable, find your ```UDID``` using the shell:
+```
+system_profiler SPUSBDataType
+```
+
+This prints all attached USB devices. Look for your iPhone's serial number. That is the ```UDID```.
+
+Ensure you have the ios-webkit-debug-proxy proxying your device.
+
+```
+ios_webkit_debug_proxy -c UDID:27753 -d
+```
+
+Installation instructions [here](https://github.com/appium/appium/blob/master/docs/en/hybrid.md#execution-against-a-real-ios-device).
+
+I have seen some issues getting the proxy to run. This helped resolve my issues: https://github.com/google/ios-webkit-debug-proxy/issues/59
+
+#### Running tests
+
+After all the pieces come together, run
+```
+PLATFORM=ios IOS_UDID=UDID PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
+```
+
+#### Android
+
+Ensure your device is attached as a usb device. Then simply run:
+
+```
+PLATFORM=android APP_PACKAGE='com.domain.appname' APP_ACTIVITY='.ActivityName' PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
