@@ -7,17 +7,7 @@ exports.ios = {
   'appium-version': '1.1',
   platformName: 'iOS',
   platformVersion: '7.1',
-  deviceName: 'iPhone Simulator',
-  app: undefined // will be set later
-};
-
-exports.iosDevice = {
-  browserName: '',
-  'appium-version': '1.1',
-  platformName: 'iOS',
-  platformVersion: '7.1',
   deviceName: 'iPhone',
-  udid: process.env.IOS_UDID,
   app: undefined // will be set later
 };
 

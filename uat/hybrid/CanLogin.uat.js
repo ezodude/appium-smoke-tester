@@ -16,7 +16,8 @@ describe("Can Login", function () {
   var allPassed = true,
       username = process.env.PRIVATE_USERNAME,
       password = process.env.PRIVATE_PASSWORD,
-      platform = process.env.PLATFORM || 'ios';
+      platform = process.env.PLATFORM || 'ios',
+      iOSDeviceUDID = process.env.IOS_UDID;
 
   function setupWithAppiumServer(serverConfig) {
     return wd.promiseChainRemote(serverConfig);
@@ -27,8 +28,13 @@ describe("Can Login", function () {
   }
 
   function addCapabilitiesAndInit(capabilities, driver) {
-    var desired = _.clone(capabilities[platform + 'Device']);
-    desired.app = path.join('../../', require("../helpers/apps")[platform + 'Private1' + 'Device']);
+    var desired = _.clone(capabilities[platform]);
+    desired.app = path.join('../../', require("../helpers/apps")[platform + 'Private1']);
+
+    if (platform === 'ios' && iOSDeviceUDID) {
+      desired.app = path.join('../../', require("../helpers/apps")[platform + 'Private1' + 'Device']);
+      desired.udid = iOSDeviceUDID;
+    }
 
     if (platform === 'android') {
       desired.appPackage = process.env.APP_PACKAGE;

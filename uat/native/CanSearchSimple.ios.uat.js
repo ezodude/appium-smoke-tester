@@ -19,7 +19,7 @@ describe("Can Search Simple", function () {
 
   var driver;
   var allPassed = true,
-      platform = process.env.PLATFORM || 'ios';
+      platform = 'ios';
 
   function setupWithAppiumServer(serverConfig) {
     return wd.promiseChainRemote(serverConfig);
