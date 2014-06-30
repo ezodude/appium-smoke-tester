@@ -121,7 +121,7 @@ Also, ensure that ANDROID_HOME is setup correctly,
 ```
 echo $ANDROID_HOME
 ```
-This should output something similar to - i.e. the path to your Android installation:
+This should output something similar to below - i.e. the path to your Android installation:
 ```
 /usr/local/opt/android-sdk
 ```
