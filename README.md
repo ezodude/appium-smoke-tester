@@ -117,6 +117,16 @@ Using Genymotion, install these virtual devices:
 > You have to ensure Genymotion and the specific virtual device are
 > running before the test can be executed. Start a device, test, kill that device, move to next device and repeat.
 
+Also, ensure that ANDROID_HOME is setup correctly,
+```
+echo $ANDROID_HOME
+```
+This should output something similar to below - i.e. the path to your Android installation:
+```
+/usr/local/opt/android-sdk
+```
+
+Running the actual test: 
 ```
 PLATFORM=android APP_PACKAGE='com.domain.appname' APP_ACTIVITY='.ActivityName' PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
 ```
