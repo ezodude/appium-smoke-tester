@@ -49,16 +49,17 @@ describe("Can Login", function () {
   }
 
   function switchToUIWebViewContext(driver) {
-    var webViewContext = 'WEBVIEW'; // instead of default NATIVE_APP context
+    // instead of default NATIVE_APP context
 
     return driver.setImplicitWaitTimeout(3000)
       .contexts()
       .then(function (contexts) {
-        webViewContext = _.find(contexts, function (context) {
+        var webViewContext = _.find(contexts, function (context) {
           return context.indexOf('WEBVIEW') !== -1;
         });
-      })
-      .context(webViewContext);
+        console.log('webViewContext', webViewContext);
+        return driver.context(webViewContext);
+      });
   }
 
   before(function () {
@@ -102,10 +103,10 @@ describe("Can Login", function () {
         .sendKeys(username)
       .elementByCss('input[type=\'password\']')
         .sendKeys(password)
-      .elementByCss('button').click()
-      .waitForElementByCss('.courses', 5000)
-      .waitForElementByCss('.course-title', 5000)
-      .text().should.eventually.include('Mobile');
+      .elementByCss('.sign-in').click()
+      .waitForElementByCss('.app-title', 5000)
+      .waitForElementByCss('.app-button', 5000)
+      .text().should.eventually.include('+');
   });
 
 });
