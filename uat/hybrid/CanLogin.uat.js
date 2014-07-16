@@ -29,10 +29,10 @@ describe("Can Login", function () {
 
   function addCapabilitiesAndInit(capabilities, driver) {
     var desired = _.clone(capabilities[platform]);
-    desired.app = path.join('../../', require("../helpers/apps")[platform + 'Private1']);
+    desired.app = path.join('../../', require("../helpers/apps")[platform + 'Hybrid']);
 
     if (platform === 'ios' && iOSDeviceUDID) {
-      desired.app = path.join('../../', require("../helpers/apps")[platform + 'Private1' + 'Device']);
+      desired.app = path.join('../../', require("../helpers/apps")[platform + 'Hybrid' + 'Device']);
       desired.udid = iOSDeviceUDID;
     }
 
