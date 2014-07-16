@@ -151,7 +151,7 @@ Specifically:
 
 We have to ensure that the app has been compiled for __a device (armv7 build)__ and has been signed with __a developer cert__.
 
-Also, the device used should be already be __configured as a trusted development device__.
+Also, the device used should be already be __configured as a trusted development device in Xcode__.
 
 We can confirm both these assumptions using this command
 
