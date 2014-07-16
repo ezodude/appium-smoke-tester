@@ -82,15 +82,13 @@ Ending your web drivage..
 
 The __default gulp task__ is configured to run a prototypical hybrid test. This is a plain mocha smoke test that checks that login works correctly.
 
-> Unfortunately, the target app used is **private**.
-
-> You can supply your own app and settings **using ENV variables** - but I'm working on adding a sample app soon.
+The tests are run against the bundled BeanThere.app found in the ```/sample-code``` directory.
 
 ### On Simulators
 
 #### iOS for login smoke test
 
-This targets the simulator only.
+This targets the simulator only, i.e. an ```i386``` .app build.
 
 ```
 PLATFORM=ios PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
@@ -98,7 +96,7 @@ PLATFORM=ios PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
 
 ```PRIVATE_USERNAME``` and ```PRIVATE_PASSWORD``` are the target login screen's username and password.
 
-This fires up the iOS simulator and runs the hybrid mocha tests. The tested app is a ```i386``` build.
+This fires up the iOS simulator and runs the hybrid mocha tests.
 
 #### Android for login smoke test
 
@@ -126,7 +124,7 @@ This should output something similar to below - i.e. the path to your Android in
 /usr/local/opt/android-sdk
 ```
 
-Running the actual test: 
+Running the actual test:
 ```
 PLATFORM=android APP_PACKAGE='com.domain.appname' APP_ACTIVITY='.ActivityName' PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
 ```
@@ -151,7 +149,9 @@ Specifically:
 
 #### Building app for running on device
 
-We have to ensure that the app has been compiled for a device (armv7 build) and has been signed correctly.
+We have to ensure that the app has been compiled for __a device (armv7 build)__ and has been signed with __a developer cert__.
+
+Also, the device used should be already be __configured as a trusted development device__.
 
 We can confirm both these assumptions using this command
 
@@ -167,8 +167,8 @@ Identifier=com.domain.app-name
 Format=bundle with Mach-O thin (armv7)
 CodeDirectory v=20200 size=9793 flags=0x0(none) hashes=480+5 location=embedded
 Hash type=sha1 size=20
-CDHash=0c79926b8fa4025da8ab9e077d8b4bd701a48ffc
-Signature size=4338
+CDHash=0c79926b8fa4025da8ab9e077d8b4bd70xxxxxxx
+Signature size=4000
 Authority=iPhone Developer: Joe Dev (XXXXXXXX)
 Authority=Apple Worldwide Developer Relations Certification Authority
 Authority=Apple Root CA
@@ -223,7 +223,7 @@ I have seen some issues getting the proxy to run. This helped resolve my issues:
 
 After all the pieces come together, run
 ```
-PLATFORM=ios IOS_UDID=UDID PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
+PLATFORM=ios IOS_UDID='UDID' PRIVATE_USERNAME='username@app.com' PRIVATE_PASSWORD='xxxx' gulp
 ```
 
 #### Android
